@@ -1,4 +1,4 @@
-const currencyList = {
+let countryList = {
   AED: "AE",
   AFN: "AF",
   XCD: "AG",
@@ -22,7 +22,7 @@ const currencyList = {
   BOB: "BO",
   BRL: "BR",
   BSD: "BS",
-  NOK: "NO",
+  NOK: "BV",
   BWP: "BW",
   BYR: "BY",
   BZD: "BZ",
@@ -168,7 +168,7 @@ const dropList = document.querySelectorAll("form select"),
   getButton = document.querySelector("form button");
 
 for (let i = 0; i < dropList.length; i++) {
-  for (let currency_code in currencyList) {
+  for (let currency_code in countryList) {
     let selected =
       i == 0
         ? currency_code == "USD"
@@ -186,15 +186,34 @@ for (let i = 0; i < dropList.length; i++) {
 }
 
 function loadFlag(element) {
-  for (let code in currencyList) {
+  for (let code in countryList) {
     if (code == element.value) {
       let imgTag = element.parentElement.querySelector("img");
-      imgTag.src = `https://flagcdn.com/48x36/${currencyList[
+      imgTag.src = `https://flagcdn.com/48x36/${countryList[
         code
       ].toLowerCase()}.png`;
     }
   }
 }
+
+window.addEventListener("load", () => {
+  getExchangeRate();
+});
+
+getButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  getExchangeRate();
+});
+
+const exchangeIcon = document.querySelector("form .icon");
+exchangeIcon.addEventListener("click", () => {
+  let tempCode = fromCurrency.value;
+  fromCurrency.value = toCurrency.value;
+  toCurrency.value = tempCode;
+  loadFlag(fromCurrency);
+  loadFlag(toCurrency);
+  getExchangeRate();
+});
 
 function getExchangeRate() {
   const amount = document.querySelector("form input");
@@ -204,7 +223,6 @@ function getExchangeRate() {
     amount.value = "1";
     amountVal = 1;
   }
-
   exchangeRateTxt.innerText = "Getting exchange rate...";
   let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
   fetch(url)
@@ -218,21 +236,3 @@ function getExchangeRate() {
       exchangeRateTxt.innerText = "Something went wrong";
     });
 }
-const exchangeIcon = document.querySelector("form .icon");
-exchangeIcon.addEventListener("click", () => {
-  let tempCode = fromCurrency.value;
-  fromCurrency.value = toCurrency.value;
-  toCurrency.value = tempCode;
-  loadFlag(fromCurrency);
-  loadFlag(toCurrency);
-  getExchangeRate();
-});
-
-window.addEventListener("load", () => {
-  getExchangeRate();
-});
-
-getButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  getExchangeRate();
-});

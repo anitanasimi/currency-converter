@@ -227,3 +227,12 @@ exchangeIcon.addEventListener("click", () => {
   loadFlag(toCurrency);
   getExchangeRate();
 });
+
+window.addEventListener("load", () => {
+  getExchangeRate();
+});
+
+getButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  getExchangeRate();
+});

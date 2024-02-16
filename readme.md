@@ -29,6 +29,8 @@ This is a simple currency converter web application that allows users to convert
 1. Clone the repository: `git clone https://github.com/anitansimi/currency-converter.git`
 2. Open the `index.html` file in your web browser.
 
+Alternatively, you can [visit this link](https://anitanasimi.github.io/currency-converter/) to use the web app online.
+
 ## Credits
 
 - Flag icons from [Flag Icon CSS](https://flag-icon-css.lip.is/)
